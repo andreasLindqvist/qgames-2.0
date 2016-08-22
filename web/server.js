@@ -5,8 +5,7 @@ var path = require('path');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
-//webuser:apa090
-var db = mongoose.connect('mongodb://thgames:datasn1lle@ds019654.mlab.com:19654/thgames', { authMechanism: 'ScramSHA1' });
+var db = mongoose.connect('mongodb://admin:datasn1lle@ds019654.mlab.com:19654/thgames', { authMechanism: 'ScramSHA1' });
 console.log('mongo state: ' + mongoose.connection.readyState);
 mongoose.connection.on('error', function (err) {
     console.log('mongo error');
