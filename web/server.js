@@ -93,6 +93,10 @@ app.get('/', function (req, res) {
     res.send('Hej värld');
 });
 
+app.get('/tournament', function (req, res) {
+    res.send('Hej värld 2');
+});
+
 
 app.use(function (req, res, next) {
     res.status(404).sendFile(__dirname + path404);
