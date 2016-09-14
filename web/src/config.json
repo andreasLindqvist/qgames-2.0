@@ -1,0 +1,8 @@
+﻿{
+  "webapi": {
+    "teams": "/webapi/teams",
+    "players": "/webapi/players",
+    "games": "/webapi/games",
+    "tournaments":  "/webapi/tournaments"
+  }
+}

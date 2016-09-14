@@ -1,4 +1,5 @@
-﻿import React from 'react'
+﻿import config from '../config.json';
+import React from 'react';
 
 export default class Tournament extends React.Component {
     constructor() {
@@ -13,7 +14,7 @@ export default class Tournament extends React.Component {
     }
     loadTournamentFromServer() {
         $.ajax({
-            url: `/webapi/teams/${this.props.params.id}`,
+            url: `${config.webapi.teams}/${this.props.params.id}`,
             //57d7a4dcdcba0f25a261fa75",
             dataType: 'json',
             cache: false,

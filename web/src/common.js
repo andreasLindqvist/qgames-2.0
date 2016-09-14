@@ -2,9 +2,9 @@
 var apa = 123;
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route } from 'react-router'
+import { Router, Route } from 'react-router';
 import TestComponent from './components/TestComponent';
-import Tournament from './components/Tournament'
+import Tournament from './components/Tournament';
 
 console.log('apan3');
 ReactDOM.render((

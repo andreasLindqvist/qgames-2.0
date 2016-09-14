@@ -198,40 +198,25 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 	
-	function defaultSetTimout() {
-	    throw new Error('setTimeout has not been defined');
-	}
-	function defaultClearTimeout () {
-	    throw new Error('clearTimeout has not been defined');
-	}
 	(function () {
 	    try {
-	        if (typeof setTimeout === 'function') {
-	            cachedSetTimeout = setTimeout;
-	        } else {
-	            cachedSetTimeout = defaultSetTimout;
-	        }
+	        cachedSetTimeout = setTimeout;
 	    } catch (e) {
-	        cachedSetTimeout = defaultSetTimout;
+	        cachedSetTimeout = function () {
+	            throw new Error('setTimeout is not defined');
+	        }
 	    }
 	    try {
-	        if (typeof clearTimeout === 'function') {
-	            cachedClearTimeout = clearTimeout;
-	        } else {
-	            cachedClearTimeout = defaultClearTimeout;
-	        }
+	        cachedClearTimeout = clearTimeout;
 	    } catch (e) {
-	        cachedClearTimeout = defaultClearTimeout;
+	        cachedClearTimeout = function () {
+	            throw new Error('clearTimeout is not defined');
+	        }
 	    }
 	} ())
 	function runTimeout(fun) {
 	    if (cachedSetTimeout === setTimeout) {
 	        //normal enviroments in sane situations
-	        return setTimeout(fun, 0);
-	    }
-	    // if setTimeout wasn't available but was latter defined
-	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-	        cachedSetTimeout = setTimeout;
 	        return setTimeout(fun, 0);
 	    }
 	    try {
@@ -252,11 +237,6 @@
 	function runClearTimeout(marker) {
 	    if (cachedClearTimeout === clearTimeout) {
 	        //normal enviroments in sane situations
-	        return clearTimeout(marker);
-	    }
-	    // if clearTimeout wasn't available but was latter defined
-	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-	        cachedClearTimeout = clearTimeout;
 	        return clearTimeout(marker);
 	    }
 	    try {
@@ -26753,7 +26733,7 @@
 	    function TestComponent() {
 	        _classCallCheck(this, TestComponent);
 	
-	        return _possibleConstructorReturn(this, (TestComponent.__proto__ || Object.getPrototypeOf(TestComponent)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TestComponent).apply(this, arguments));
 	    }
 	
 	    _createClass(TestComponent, [{
@@ -26790,6 +26770,10 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _config = __webpack_require__(235);
+	
+	var _config2 = _interopRequireDefault(_config);
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -26808,7 +26792,7 @@
 	    function Tournament() {
 	        _classCallCheck(this, Tournament);
 	
-	        var _this = _possibleConstructorReturn(this, (Tournament.__proto__ || Object.getPrototypeOf(Tournament)).call(this));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Tournament).call(this));
 	
 	        _this.state = { data: {} };
 	        return _this;
@@ -26827,7 +26811,7 @@
 	        key: 'loadTournamentFromServer',
 	        value: function loadTournamentFromServer() {
 	            $.ajax({
-	                url: '/webapi/teams/' + this.props.params.id,
+	                url: _config2.default.webapi.teams + '/' + this.props.params.id,
 	                //57d7a4dcdcba0f25a261fa75",
 	                dataType: 'json',
 	                cache: false,
@@ -26857,6 +26841,19 @@
 	}(_react2.default.Component);
 	
 	exports.default = Tournament;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"webapi": {
+			"teams": "/webapi/teams",
+			"players": "/webapi/players",
+			"games": "/webapi/games",
+			"tournaments": "/webapi/tournaments"
+		}
+	};
 
 /***/ }
 /******/ ]);

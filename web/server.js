@@ -16,14 +16,15 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var Team = require('./webapi/models/team');
-
 app.use(express.static(__dirname + '/public'));
 
 var webApiRouter = express.Router();
 webApiRouter.get('/', function (req, res) {
-    res.json({ message: 'This is the QGames API' });
+    res.send('Välkommen till WebApi:et.\r\nJust det');
 });
+
+/* --- Teams --- */
+var Team = require('./webapi/models/team');
 webApiRouter.route('/teams')
 	.get(function (req, res) {
 	    console.log('get teams');
@@ -87,6 +88,105 @@ webApiRouter.route('/teams/:team_id')
             res.json({ message: 'Successfully deleted', team: team});
         });
     });
+
+/* --- Players --- */
+var Player = require('./webapi/models/player');
+webApiRouter.route('/players')
+	.get(function (req, res) {
+	    console.log('get players');
+	    Player.find().exec(function (err, players) {
+	        if (err)
+	            res.send(err);
+
+	        res.json(players);
+	    });
+	})
+    .post(function (req, res) {
+       // -------------- 
+    });
+webApiRouter.route('/players/:player_id')
+    .get(function (req, res) {
+        console.log('get player');
+        console.log('id: ' + req.params.player_id);
+        Player.findById(req.params.player_id).exec(function (err, player) {
+            if (err)
+                res.send(err);
+            res.json(player);
+        });
+    })
+    .put(function (req, res) {
+        Player.findById(req.params.player_id, function (err, player) {
+            // ---------------------
+        });
+    })
+    .delete(function (req, res) {
+        Player.remove({
+            _id: req.params.player_id
+        }, function (err, team) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Successfully deleted', player: player});
+        });
+    });
+
+/* --- Games --- */
+var Game = require('./webapi/models/game');
+webApiRouter.route('/games')
+	.get(function (req, res) {
+	    console.log('get games');
+	    Game.find().exec(function (err, games) {
+	        if (err)
+	            res.send(err);
+
+	        res.json(games);
+	    });
+	})
+    .post(function (req, res) {
+        // -------------- 
+    });
+webApiRouter.route('/games/:game_id')
+    .get(function (req, res) {
+        console.log('get game');
+        console.log('id: ' + req.params.game_id);
+        Game.findById(req.params.game_id).exec(function (err, game) {
+            if (err)
+                res.send(err);
+            res.json(game);
+        });
+    })
+    .put(function (req, res) {
+        Game.findById(req.params.game_id, function (err, game) {
+            // ---------------------
+        });
+    })
+    .delete(function (req, res) {
+        Game.remove({
+            _id: req.params.game_id
+        }, function (err, game) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Successfully deleted', game: game });
+        });
+    });
+webApiRouter.route('/gamedetails/:game_id')
+    .get(function (req, res) {
+        console.log('get game details');
+        console.log('id: ' + req.params.game_id);
+        var game = {}, homeTeam = {}, awayTeam = {};
+        Game.findById(req.params.game_id).exec(function (err, result) {
+            if (err)
+                res.send(err);
+            game = result;
+            console.log(game.homeTeam.id);
+            Team.where('_id').in([mongoose.Types.ObjectId(game.homeTeam.id), mongoose.Types.ObjectId(game.awayTeam.id)]).exec(function (err, result) {
+                var t1 = result[0];
+                res.json({ teams: [t1] });
+            });
+        });
+    });
+
 app.use('/webapi', webApiRouter);
 
 app.get('/', function (req, res) {

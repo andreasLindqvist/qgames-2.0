@@ -16,6 +16,11 @@
               query: {
                   presets: ['es2015', 'stage-0', 'react']
               }
+          },
+          {
+              test: /\.json$/,
+              exclude: /node_modules/,
+              loader: 'json'
           }
         ]
     }
