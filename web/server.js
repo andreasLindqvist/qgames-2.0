@@ -174,8 +174,33 @@ webApiRouter.route('/gamedetails/:game_id')
     .get(function (req, res) {
         console.log('get game details');
         console.log('id: ' + req.params.game_id);
-        var game = {}, homeTeam = {}, awayTeam = {};
-        Game.findById(req.params.game_id).exec(function (err, result) {
+        //var game = {}, homeTeam = {}, awayTeam = {};
+        var homeTeam = { id: '', name: '', goals: 0 }, awayTeam = { id: '', name: '', goals: 0 };
+        Game.findById(req.params.game_id).exec()
+        .then(function (game) {
+            console.log('1');
+            console.log(game.homeTeam.id);
+            homeTeam.id = game.homeTeam.id;
+            homeTeam.goals = game.homeTeam.goalsScored;
+            awayTeam.id = game.awayTeam.id;
+            awayTeam.goals = game.awayTeam.goalsScored;
+            //res.json({ game: game });
+            return Team.findById(game.homeTeam.id).exec();
+        })
+        .then(function (team) {
+            console.log('2');
+            console.log(team);
+            homeTeam.name = team.name;
+            return Team.findById(awayTeam.id).exec();
+            
+        }).then(function (team) {
+            console.log('3');
+            console.log(team);
+            awayTeam.name = team.name;
+            var details = homeTeam.name + ' - ' + awayTeam.name + ': ' + homeTeam.goals + '-' + awayTeam.goals;
+            res.json({ details: details });
+        });
+        /*Game.findById(req.params.game_id).exec(function (err, result) {
             if (err)
                 res.send(err);
             game = result;
@@ -184,8 +209,11 @@ webApiRouter.route('/gamedetails/:game_id')
                 var t1 = result[0];
                 res.json({ teams: [t1] });
             });
-        });
+        });*/
     });
+var getTeamInfo = function (err, result) {
+
+};
 
 app.use('/webapi', webApiRouter);
 

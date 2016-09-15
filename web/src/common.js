@@ -7,6 +7,7 @@ import TestComponent from './components/TestComponent';
 import Tournament from './components/Tournament';
 
 console.log('apan3');
+
 ReactDOM.render((
 <Router>
     <Route path="/apa" component={TestComponent} />
