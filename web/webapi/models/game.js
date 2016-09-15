@@ -7,14 +7,13 @@ var GameSchema = new Schema({
     },
     homeTeam: {
         id: String,
-        goalsScored: Number,
-        goalsAgainst: Number
+        goals: Number
     },
     awayTeam: {
         id: String,
-        goalsScored: Number,
-        goalsAgainst: Number
-    }
+        goals: Number
+    },
+    played: Date
 });
 
 module.exports = mongoose.model('Game', GameSchema, 'games');

@@ -23,199 +23,17 @@ webApiRouter.get('/', function (req, res) {
     res.send('Välkommen till WebApi:et.\r\nJust det');
 });
 
-/* --- Teams --- */
-var Team = require('./webapi/models/team');
-webApiRouter.route('/teams')
-	.get(function (req, res) {
-	    console.log('get teams');
-	    Team.find().exec(function (err, teams) {
-	        if (err)
-	            res.send(err);
-
-	        res.json(teams);
-	    });
-	})
-    .post(function (req, res) {
-        /*var page = new Team();
-        page.headline = req.body.headline;
-        page.description = req.body.description;
-        var currentDate = new Date();
-        page.publishDate = currentDate;
-        page.modifiedDate = currentDate;
-        page.save(function (err) {
-            if (err)
-                res.send(err);
-
-            res.json({ message: 'Page created!', page: page });
-        });
-        */
-    });
-webApiRouter.route('/teams/:team_id')
-    .get(function (req, res) {
-        console.log('get team');
-        console.log('id: ' + req.params.team_id);
-        Team.findById(req.params.team_id).exec(function (err, team) {
-            if (err)
-                res.send(err);
-            res.json(team);
-        });
-    })
-    .put(function (req, res) {
-        Team.findById(req.params.team_id, function (err, team) {
-            /*if (err)
-                res.send(err);
-            if (req.body.headline)
-                page.headline = req.body.headline;
-            if (req.body.description)
-                page.description = req.body.description;
-            var currentDate = new Date();
-            page.modifiedDate = currentDate;
-            page.save(function (err) {
-                if (err)
-                    res.send(err);
-                res.json({ message: 'Page updated!', page: page });
-            });
-            */
-        });
-    })
-    .delete(function (req, res) {
-        Team.remove({
-            _id: req.params.team_id
-        }, function (err, team) {
-            if (err)
-                res.send(err);
-
-            res.json({ message: 'Successfully deleted', team: team});
-        });
-    });
-
-/* --- Players --- */
-var Player = require('./webapi/models/player');
-webApiRouter.route('/players')
-	.get(function (req, res) {
-	    console.log('get players');
-	    Player.find().exec(function (err, players) {
-	        if (err)
-	            res.send(err);
-
-	        res.json(players);
-	    });
-	})
-    .post(function (req, res) {
-       // -------------- 
-    });
-webApiRouter.route('/players/:player_id')
-    .get(function (req, res) {
-        console.log('get player');
-        console.log('id: ' + req.params.player_id);
-        Player.findById(req.params.player_id).exec(function (err, player) {
-            if (err)
-                res.send(err);
-            res.json(player);
-        });
-    })
-    .put(function (req, res) {
-        Player.findById(req.params.player_id, function (err, player) {
-            // ---------------------
-        });
-    })
-    .delete(function (req, res) {
-        Player.remove({
-            _id: req.params.player_id
-        }, function (err, team) {
-            if (err)
-                res.send(err);
-
-            res.json({ message: 'Successfully deleted', player: player});
-        });
-    });
-
-/* --- Games --- */
-var Game = require('./webapi/models/game');
-webApiRouter.route('/games')
-	.get(function (req, res) {
-	    console.log('get games');
-	    Game.find().exec(function (err, games) {
-	        if (err)
-	            res.send(err);
-
-	        res.json(games);
-	    });
-	})
-    .post(function (req, res) {
-        // -------------- 
-    });
-webApiRouter.route('/games/:game_id')
-    .get(function (req, res) {
-        console.log('get game');
-        console.log('id: ' + req.params.game_id);
-        Game.findById(req.params.game_id).exec(function (err, game) {
-            if (err)
-                res.send(err);
-            res.json(game);
-        });
-    })
-    .put(function (req, res) {
-        Game.findById(req.params.game_id, function (err, game) {
-            // ---------------------
-        });
-    })
-    .delete(function (req, res) {
-        Game.remove({
-            _id: req.params.game_id
-        }, function (err, game) {
-            if (err)
-                res.send(err);
-
-            res.json({ message: 'Successfully deleted', game: game });
-        });
-    });
-webApiRouter.route('/gamedetails/:game_id')
-    .get(function (req, res) {
-        console.log('get game details');
-        console.log('id: ' + req.params.game_id);
-        //var game = {}, homeTeam = {}, awayTeam = {};
-        var homeTeam = { id: '', name: '', goals: 0 }, awayTeam = { id: '', name: '', goals: 0 };
-        Game.findById(req.params.game_id).exec()
-        .then(function (game) {
-            console.log('1');
-            console.log(game.homeTeam.id);
-            homeTeam.id = game.homeTeam.id;
-            homeTeam.goals = game.homeTeam.goalsScored;
-            awayTeam.id = game.awayTeam.id;
-            awayTeam.goals = game.awayTeam.goalsScored;
-            //res.json({ game: game });
-            return Team.findById(game.homeTeam.id).exec();
-        })
-        .then(function (team) {
-            console.log('2');
-            console.log(team);
-            homeTeam.name = team.name;
-            return Team.findById(awayTeam.id).exec();
-            
-        }).then(function (team) {
-            console.log('3');
-            console.log(team);
-            awayTeam.name = team.name;
-            var details = homeTeam.name + ' - ' + awayTeam.name + ': ' + homeTeam.goals + '-' + awayTeam.goals;
-            res.json({ details: details });
-        });
-        /*Game.findById(req.params.game_id).exec(function (err, result) {
-            if (err)
-                res.send(err);
-            game = result;
-            console.log(game.homeTeam.id);
-            Team.where('_id').in([mongoose.Types.ObjectId(game.homeTeam.id), mongoose.Types.ObjectId(game.awayTeam.id)]).exec(function (err, result) {
-                var t1 = result[0];
-                res.json({ teams: [t1] });
-            });
-        });*/
-    });
-var getTeamInfo = function (err, result) {
-
-};
-
 app.use('/webapi', webApiRouter);
+
+var playerRouter = require('./webapi/routers/players');
+var teamRouter = require('./webapi/routers/teams');
+var gameRouter = require('./webapi/routers/games');
+var tournamentRouter = require('./webapi/routers/tournaments');
+
+app.use('/webapi/players', playerRouter);
+app.use('/webapi/teams', teamRouter);
+app.use('/webapi/games', gameRouter);
+app.use('/webapi/tournaments', tournamentRouter);
 
 app.get('/', function (req, res) {
     res.send('Hej värld');
@@ -229,8 +47,6 @@ app.get('/tournament', function (req, res) {
 app.use(function (req, res, next) {
     res.status(404).sendFile(__dirname + path404);
 });
-
-
 
 app.listen(3000, function () {
     console.log('nu lyssnar vi på 3000');
