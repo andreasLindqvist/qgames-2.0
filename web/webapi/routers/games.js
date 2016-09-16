@@ -60,10 +60,10 @@ router.route('/:game_id/details')
         console.log('id: ' + req.params.game_id);
         //var game = {}, homeTeam = {}, awayTeam = {};
         var homeTeam = { id: '', name: '', goals: 0 }, awayTeam = { id: '', name: '', goals: 0 };
+        var gameResult = {};
         Game.findById(req.params.game_id).exec()
         .then(function (game) {
-            console.log('1');
-            console.log(game.homeTeam.id);
+            gameResult = game;
             homeTeam.id = game.homeTeam.id;
             homeTeam.goals = game.homeTeam.goals;
             awayTeam.id = game.awayTeam.id;

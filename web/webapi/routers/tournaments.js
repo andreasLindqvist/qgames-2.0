@@ -73,23 +73,40 @@ router.route('/:tournament_id/details')
         var getTeamDone = function (team) {
             tournamentDetails.teams.push(team);
             checkAllTeamsDone();
-        }
+        };
         var checkAllTeamsDone = function () {
             if (tournamentDetails.teams.length == tournamentDetailsNumTeams) {
-                Game.find({ 'tournament.id': req.params.tournament_id }).sort({date: -1}).exec()
-                .then(function (games) {
-                    tournamentDetails.games = games;
-                    checkAllGamesDone();
-                });
+                getAllGames();
             }
+        };
+
+        var getAllGames = function () {
+            Game.find({ 'tournament.id': req.params.tournament_id }).sort({ date: -1 }).exec()
+                .then(function (games) {
+                    tournamentDetailsNumGames = games.length;
+                    for (var i = 0; i < tournamentDetailsNumGames; i++) {
+                        var game = games[i];
+                        var gameId = game.id;
+                        getGame(gameId);
+                    }
+                });
         }
+        var getGame = function (id) {
+            Game.findById(id).exec(function (err, game) {
+                if (err)
+                    res.send(err);
+                getGameDone(game);
+            });
+        };
+        var getGameDone = function (game) {
+            tournamentDetails.games.push(game);
+            checkAllGamesDone();
+        };
 
         var checkAllGamesDone = function () {
-            res.json(tournamentDetails);
-            /*
             if (tournamentDetails.games.length == tournamentDetailsNumGames) {
                 res.json(tournamentDetails);
-            }*/
+            }
         }
     });
 
