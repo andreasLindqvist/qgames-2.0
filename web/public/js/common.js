@@ -64,17 +64,40 @@
 	
 	var _Tournament2 = _interopRequireDefault(_Tournament);
 	
+	var _TournamentList = __webpack_require__(236);
+	
+	var _TournamentList2 = _interopRequireDefault(_TournamentList);
+	
+	var _Team = __webpack_require__(237);
+	
+	var _Team2 = _interopRequireDefault(_Team);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	/* Knowledge base */
+	/*
+	var team = {
+	    name: 'Italy',
+	    playerId: '57d7a944dcba0f25a261fc06',
+	    logo: 'http://25.media.tumblr.com/tumblr_mbh88bwCq71riuajgo1_1280.jpg'
+	};
+	var request = $.ajax(url, { dataType: 'json', type: 'POST', data: JSON.stringify(team), contentType: 'application/json;charset=utf-8' });
+	request.done(this.onFeedSaved.bind(this)).fail(this.onFeedSavedFail.bind(this));
+	*/
+	
 	var apa = 123;
+	
 	
 	console.log('apan3');
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
 	    null,
+	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _TestComponent2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/apa', component: _TestComponent2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/tournament/:id', component: _Tournament2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/tournament', component: _TournamentList2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/tournament/:id', component: _Tournament2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/team/:id', component: _Team2.default })
 	), document.querySelector('#app'));
 	//getElementById('app'))
 	
@@ -26794,13 +26817,9 @@
 	
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Tournament).call(this));
 	
-	        _this.state = { data: {} };
+	        _this.state = { data: { name: '', teams: [] } };
 	        return _this;
 	    }
-	    //getInitialState() {
-	    //    return { data: [] };
-	    //}
-	
 	
 	    _createClass(Tournament, [{
 	        key: 'componentDidMount',
@@ -26810,9 +26829,11 @@
 	    }, {
 	        key: 'loadTournamentFromServer',
 	        value: function loadTournamentFromServer() {
+	            console.log(_config2.default.webapi.tournaments);
+	            console.log(_config2.default.webapi.tournaments + '/' + this.props.params.id);
+	            var url = _config2.default.webapi.tournaments + '/' + this.props.params.id + '/details';
 	            $.ajax({
-	                url: _config2.default.webapi.teams + '/' + this.props.params.id,
-	                //57d7a4dcdcba0f25a261fa75",
+	                url: url,
 	                dataType: 'json',
 	                cache: false,
 	                success: function (data) {
@@ -26827,12 +26848,36 @@
 	        key: 'render',
 	        value: function render() {
 	            console.log('render Tournament');
-	            var tournamentId = this.props.params.id;
 	            return _react2.default.createElement(
-	                'h2',
-	                null,
-	                'Tournament!!: ',
-	                this.state.data.name
+	                'div',
+	                { className: 'tournament' },
+	                _react2.default.createElement(
+	                    'h2',
+	                    null,
+	                    'Tournament!!: ',
+	                    this.state.data.name
+	                ),
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    'Lag:'
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    null,
+	                    this.state.data.teams.map(function (team) {
+	                        var teamLink = '/#/team/' + team._id;
+	                        return _react2.default.createElement(
+	                            'li',
+	                            { key: team._id, 'data-id': team.id },
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: teamLink },
+	                                team.name
+	                            )
+	                        );
+	                    })
+	                )
 	            );
 	        }
 	    }]);
@@ -26854,6 +26899,192 @@
 			"tournaments": "/webapi/tournaments"
 		}
 	};
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _config = __webpack_require__(235);
+	
+	var _config2 = _interopRequireDefault(_config);
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TournamentList = function (_React$Component) {
+	    _inherits(TournamentList, _React$Component);
+	
+	    function TournamentList() {
+	        _classCallCheck(this, TournamentList);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TournamentList).call(this));
+	
+	        _this.state = { data: [] };
+	        return _this;
+	    }
+	
+	    _createClass(TournamentList, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.loadTournamentsFromServer();
+	        }
+	    }, {
+	        key: 'loadTournamentsFromServer',
+	        value: function loadTournamentsFromServer() {
+	            $.ajax({
+	                url: '' + _config2.default.webapi.tournaments,
+	                //57d7b07adcba0f25a261ff04",
+	                dataType: 'json',
+	                cache: false,
+	                success: function (data) {
+	                    this.setState({ data: data });
+	                }.bind(this),
+	                error: function (xhr, status, err) {
+	                    console.error(this.props.url, status, err.toString());
+	                }.bind(this)
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            console.log('render Tournaments');
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'tournament-list' },
+	                _react2.default.createElement(
+	                    'h2',
+	                    null,
+	                    'Tournaments:'
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    null,
+	                    this.state.data.map(function (tournament) {
+	                        return _react2.default.createElement(
+	                            'li',
+	                            { key: tournament._id, 'data-id': tournament.id },
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: '/#/tournament/' + tournament._id },
+	                                tournament.name
+	                            )
+	                        );
+	                    })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return TournamentList;
+	}(_react2.default.Component);
+	
+	exports.default = TournamentList;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _config = __webpack_require__(235);
+	
+	var _config2 = _interopRequireDefault(_config);
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Team = function (_React$Component) {
+	    _inherits(Team, _React$Component);
+	
+	    function Team() {
+	        _classCallCheck(this, Team);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Team).call(this));
+	
+	        _this.state = { data: { name: '', playerId: '' } };
+	        return _this;
+	    }
+	
+	    _createClass(Team, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.loadTeamFromServer();
+	        }
+	    }, {
+	        key: 'loadTeamFromServer',
+	        value: function loadTeamFromServer() {
+	            var url = _config2.default.webapi.teams + '/' + this.props.params.id;
+	            $.ajax({
+	                url: url,
+	                dataType: 'json',
+	                cache: false,
+	                success: function (data) {
+	                    this.setState({ data: data });
+	                }.bind(this),
+	                error: function (xhr, status, err) {
+	                    console.error(this.props.url, status, err.toString());
+	                }.bind(this)
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            console.log('render Team');
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'team' },
+	                _react2.default.createElement(
+	                    'h2',
+	                    null,
+	                    'Team! ',
+	                    this.state.data.name
+	                ),
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    'Spelar-ID: ',
+	                    this.state.data.playerId
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Team;
+	}(_react2.default.Component);
+	
+	exports.default = Team;
 
 /***/ }
 /******/ ]);

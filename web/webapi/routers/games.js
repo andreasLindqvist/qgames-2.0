@@ -42,7 +42,19 @@ router.route('/:game_id')
             res.json({ message: 'Successfully deleted', game: game });
         });
     });
-router.route('/details/:game_id')
+
+router.route('/bytournament/:tournament_id')
+	.get(function (req, res) {
+	    console.log('get games');
+	    Game.find({ 'tournament.id': req.params.tournament_id }).sort({ played: -1 }).exec(function (err, games) {
+	        if (err)
+	            res.send(err);
+
+	        res.json(games);
+	    });
+	});
+
+router.route('/:game_id/details')
     .get(function (req, res) {
         console.log('get game details');
         console.log('id: ' + req.params.game_id);

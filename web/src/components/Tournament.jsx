@@ -4,18 +4,17 @@ import React from 'react';
 export default class Tournament extends React.Component {
     constructor() {
         super();
-        this.state = { data: {} };
+        this.state = { data: { name: '', teams: []} };
     }
-    //getInitialState() {
-    //    return { data: [] };
-    //}
     componentDidMount() {
         this.loadTournamentFromServer();
     }
     loadTournamentFromServer() {
+        console.log(config.webapi.tournaments);
+        console.log(`${config.webapi.tournaments}/${this.props.params.id}`);
+        let url = `${config.webapi.tournaments}/${this.props.params.id}/details`;
         $.ajax({
-            url: `${config.webapi.teams}/${this.props.params.id}`,
-            //57d7a4dcdcba0f25a261fa75",
+            url: url,
             dataType: 'json',
             cache: false,
             success: function (data) {
@@ -28,7 +27,16 @@ export default class Tournament extends React.Component {
     }
     render() {
         console.log('render Tournament');
-        let tournamentId = this.props.params.id;
-        return <h2>Tournament!!: {this.state.data.name}</h2>
+        return (
+            <div className="tournament">
+                <h2>Tournament!!: {this.state.data.name}</h2>
+                <h3>Lag:</h3>
+                <ul>
+                    {this.state.data.teams.map(function(team) {
+                        let teamLink = `/#/team/${team._id}`;
+                        return <li key={team._id} data-id={team.id}><a href={teamLink}>{team.name}</a></li>;
+                    })}
+                </ul>
+            </div>);
     }
 }
