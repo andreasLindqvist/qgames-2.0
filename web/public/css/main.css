@@ -19,29 +19,29 @@
 
 
 
-.example-enter {
+.q-anim-enter {
   opacity: 0.01;
 }
 
-.example-enter.example-enter-active {
+.q-anim-enter.q-anim-enter-active {
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
 
-.example-leave {
+.q-anim-leave {
   opacity: 1;
 }
 
-.example-leave.example-leave-active {
+.q-anim-leave.q-anim-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
 
-.example-appear {
+.q-anim-appear {
   opacity: 0.01;
 }
 
-.example-appear.example-appear-active {
+.q-anim-appear.q-anim-appear-active {
   opacity: 1;
   transition: opacity .5s ease-in;
 }
