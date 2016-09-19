@@ -4,20 +4,30 @@
    Author's custom styles
    ========================================================================== */
 
-.tournament {
-    transition: all 0.5s;
-    opacity: 1;
+.row {
+    display: flex;
 }
-.tournament.loading {
-    opacity: 1;
-    
-}
-.tournament.loading p {
-    padding: 20px;
+.col-md-4 {
+    display: flex;
+    flex-direction: column;
 }
 
+.loader {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-
+.view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.view ul {
+    list-style-type: none;
+    padding: 0;
+}
 
 .q-anim-enter {
   opacity: 0.01;

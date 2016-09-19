@@ -1,11 +1,12 @@
 ﻿import config from '../config.json';
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import Loader from './Loader';
 
 export default class Tournament extends React.Component {
     constructor() {
         super();
-        this.state = { data: { name: 'Apa', teams: []}, loadingDone: false };
+        this.state = { data: { name: 'Apa', teams: []}, loading: true };
     }
     componentDidMount() {
         this.loadTournamentFromServer();
@@ -19,7 +20,7 @@ export default class Tournament extends React.Component {
             dataType: 'json',
             cache: false,
             success: function (data) {
-                this.setState({ data: data, loadingDone: true });
+                this.setState({ data: data, loading: false});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -28,18 +29,20 @@ export default class Tournament extends React.Component {
     }
     render() {
         console.log('render Tournament');
-        if (!this.state.loadingDone) {
-            return (<div className="tournament loading"><p>LADDAR!!!</p></div>);
+        if (this.state.loading) {
+            return (<Loader />);
         }
         console.log(this.state.data.teams);
         console.log(this.state.data.teams[0]);
         return (
-            <div className="tournament">
-                <ReactCSSTransitionGroup transitionName="example"
+            <div className="view tournament">
+                <ReactCSSTransitionGroup transitionName="q-anim"
                                          transitionAppear={true}
-                                         transitionAppearTimeout={500}>
-                    <h2>Tournament!!: {this.state.data.name}</h2>
-                    <h3>Lag:</h3>
+                                         transitionAppearTimeout={500}
+                                         transitionEnterTimeout={500} 
+                                         transitionLeaveTimeout={300}>
+                    <h2>{this.state.data.name}</h2>
+                    <h3>Deltagande lag</h3>
                     <ul>
                         {this.state.data.teams.map(function(team) {
                         let teamLink = `/#/team/${team._id}`;
