@@ -5,7 +5,7 @@
   "license": "ISC",
   "private": true,
   "scripts": {
-    "webpack": "webpack",
+    "webpack": "webpack -w",
     "server": "node server"
   },
   "dependencies": {
