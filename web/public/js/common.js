@@ -26929,7 +26929,7 @@
 	                        { className: 'row', id: 'middle' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'col-md-6' },
+	                            { className: 'col-md-6', id: 'middle-left' },
 	                            _react2.default.createElement(
 	                                'h3',
 	                                null,
@@ -26938,7 +26938,7 @@
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'col-md-6' },
+	                            { className: 'col-md-6', id: 'middle-right' },
 	                            _react2.default.createElement(
 	                                'h3',
 	                                null,
