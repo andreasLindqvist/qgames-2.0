@@ -26895,31 +26895,56 @@
 	                        transitionEnterTimeout: 500,
 	                        transitionLeaveTimeout: 300 },
 	                    _react2.default.createElement(
-	                        'h2',
-	                        null,
-	                        this.state.data.name
+	                        'div',
+	                        { className: 'row', id: 'top' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-md-12' },
+	                            _react2.default.createElement(
+	                                'h2',
+	                                null,
+	                                this.state.data.name
+	                            ),
+	                            _react2.default.createElement(
+	                                'ul',
+	                                null,
+	                                this.state.data.teams.map(function (team) {
+	                                    var teamLink = '/#/team/' + team._id;
+	                                    console.log(teamLink);
+	                                    return _react2.default.createElement(
+	                                        'li',
+	                                        { key: team._id, 'data-id': team._id },
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            { href: teamLink },
+	                                            team.name
+	                                        )
+	                                    );
+	                                })
+	                            )
+	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        'h3',
-	                        null,
-	                        'Deltagande lag'
-	                    ),
-	                    _react2.default.createElement(
-	                        'ul',
-	                        null,
-	                        this.state.data.teams.map(function (team) {
-	                            var teamLink = '/#/team/' + team._id;
-	                            console.log(teamLink);
-	                            return _react2.default.createElement(
-	                                'li',
-	                                { key: team._id, 'data-id': team._id },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: teamLink },
-	                                    team.name
-	                                )
-	                            );
-	                        })
+	                        'div',
+	                        { className: 'row', id: 'middle' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-md-6' },
+	                            _react2.default.createElement(
+	                                'h3',
+	                                null,
+	                                'Played'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-md-6' },
+	                            _react2.default.createElement(
+	                                'h3',
+	                                null,
+	                                'Not played'
+	                            )
+	                        )
 	                    )
 	                )
 	            );
@@ -28123,7 +28148,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'view' },
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'row', id: 'top' },

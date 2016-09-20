@@ -7,7 +7,7 @@ import TournamentList from './TournamentList';
 export default class Start extends React.Component {
     render() {
         return (
-            <div>
+            <div className="view">
                 <div className="row" id="top">
                     <div className="col-md-12" >
                         <p>

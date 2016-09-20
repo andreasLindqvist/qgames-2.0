@@ -41,19 +41,30 @@ export default class Tournament extends React.Component {
                                          transitionAppearTimeout={500}
                                          transitionEnterTimeout={500} 
                                          transitionLeaveTimeout={300}>
-                    <h2>{this.state.data.name}</h2>
-                    <h3>Deltagande lag</h3>
-                    <ul>
-                        {this.state.data.teams.map(function(team) {
-                        let teamLink = `/#/team/${team._id}`;
-                        console.log(teamLink);
-                        return (
-                            <li key={team._id} data-id={team._id}>
-                                <a href={teamLink}>{team.name}</a>
-                            </li>
-                        );
-                        })}
-                    </ul>
+                    <div className="row" id="top">
+                        <div className="col-md-12" >
+                            <h2>{this.state.data.name}</h2>
+                            <ul>
+                                {this.state.data.teams.map(function(team) {
+                                let teamLink = `/#/team/${team._id}`;
+                                console.log(teamLink);
+                                return (
+                                    <li key={team._id} data-id={team._id}>
+                                        <a href={teamLink}>{team.name}</a>
+                                    </li>
+                                );
+                                })}
+</ul>
+                        </div>
+                    </div>
+                    <div className="row" id="middle">
+                        <div className="col-md-6" >
+                            <h3>Played</h3>
+                        </div>
+                        <div className="col-md-6" >
+                            <h3>Not played</h3>
+                        </div>
+                    </div>
                 </ReactCSSTransitionGroup>
 </div>);
     }
