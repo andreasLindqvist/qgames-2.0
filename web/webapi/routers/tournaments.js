@@ -61,7 +61,8 @@ router.route('/:tournament_id/details')
                 var teamId = team.id;
                 getTeam(teamId);
             }
-        });
+        })
+        .catch(function (err) { res.status(404); res.send(err); });
 
         var getTeam = function (id) {
             Team.findById(id).exec(function (err, team) {
