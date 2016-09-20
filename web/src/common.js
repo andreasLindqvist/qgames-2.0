@@ -17,10 +17,12 @@ import TestComponent from './components/TestComponent';
 import Tournament from './components/Tournament';
 import TournamentList from './components/TournamentList';
 import Team from './components/Team';
+import GameForm from './components/GameForm';
 
-console.log('apan3');
+console.log('common');
 
 ReactDOM.render((
+
 <Router>
     <Route path="/" component={TestComponent} />
     <Route path="/apa" component={TestComponent} />
@@ -28,7 +30,9 @@ ReactDOM.render((
     <Route path="/tournament/:id" component={Tournament} />
     <Route path="/team/:id" component={Team} />
 </Router>
-),document.querySelector('#app'))
+),document.querySelector('#app'));
+
+ReactDOM.render(<GameForm />, document.querySelector('#sectionGameForm'));
     //getElementById('app'))
 
 
