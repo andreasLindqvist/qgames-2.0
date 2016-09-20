@@ -17,22 +17,18 @@ import TestComponent from './components/TestComponent';
 import Tournament from './components/Tournament';
 import TournamentList from './components/TournamentList';
 import Team from './components/Team';
-import GameForm from './components/GameForm';
+import Start from './components/Start';
 
 console.log('common');
 
 ReactDOM.render((
-
 <Router>
-    <Route path="/" component={TestComponent} />
-    <Route path="/apa" component={TestComponent} />
+    <Route path="/" component={Start} />
     <Route path="/tournament" component={TournamentList} />
     <Route path="/tournament/:id" component={Tournament} />
     <Route path="/team/:id" component={Team} />
 </Router>
-),document.querySelector('#app'));
-
-ReactDOM.render(<GameForm />, document.querySelector('#sectionGameForm'));
+),document.querySelector('#app'))
     //getElementById('app'))
 
 
