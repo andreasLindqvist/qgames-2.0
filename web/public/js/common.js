@@ -72,9 +72,9 @@
 	
 	var _Team2 = _interopRequireDefault(_Team);
 	
-	var _GameForm = __webpack_require__(246);
+	var _Start = __webpack_require__(246);
 	
-	var _GameForm2 = _interopRequireDefault(_GameForm);
+	var _Start2 = _interopRequireDefault(_Start);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -97,14 +97,11 @@
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
 	    null,
-	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _TestComponent2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/apa', component: _TestComponent2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Start2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/tournament', component: _TournamentList2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/tournament/:id', component: _Tournament2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/team/:id', component: _Team2.default })
 	), document.querySelector('#app'));
-	
-	_reactDom2.default.render(_react2.default.createElement(_GameForm2.default, null), document.querySelector('#sectionGameForm'));
 	//getElementById('app'))
 	
 	
@@ -27920,7 +27917,7 @@
 	                return _react2.default.createElement(_Loader2.default, null);
 	            }
 	            return _react2.default.createElement(
-	                'div',
+	                'section',
 	                { className: 'view tournament-list' },
 	                _react2.default.createElement(
 	                    _reactAddonsCssTransitionGroup2.default,
@@ -28095,6 +28092,14 @@
 	
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 	
+	var _Loader = __webpack_require__(243);
+	
+	var _Loader2 = _interopRequireDefault(_Loader);
+	
+	var _TournamentList = __webpack_require__(244);
+	
+	var _TournamentList2 = _interopRequireDefault(_TournamentList);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28103,75 +28108,55 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var GameForm = function (_React$Component) {
-	    _inherits(GameForm, _React$Component);
+	var Start = function (_React$Component) {
+	    _inherits(Start, _React$Component);
 	
-	    function GameForm() {
-	        _classCallCheck(this, GameForm);
+	    function Start() {
+	        _classCallCheck(this, Start);
 	
-	        var _this = _possibleConstructorReturn(this, (GameForm.__proto__ || Object.getPrototypeOf(GameForm)).call(this));
-	
-	        _this.state = { data: {} };
-	        return _this;
+	        return _possibleConstructorReturn(this, (Start.__proto__ || Object.getPrototypeOf(Start)).apply(this, arguments));
 	    }
 	
-	    _createClass(GameForm, [{
+	    _createClass(Start, [{
 	        key: 'render',
 	        value: function render() {
-	            console.log('render GameForm');
 	            return _react2.default.createElement(
-	                _reactAddonsCssTransitionGroup2.default,
-	                {
-	                    transitionName: 'q-anim',
-	                    transitionAppear: true,
-	                    transitionEnterTimeout: 500,
-	                    transitionLeaveTimeout: 500,
-	                    transitionAppearTimeout: 500 },
+	                'div',
+	                null,
 	                _react2.default.createElement(
-	                    'section',
-	                    null,
-	                    _react2.default.createElement(
-	                        'h2',
-	                        null,
-	                        'Lägg till resultat'
-	                    ),
+	                    'div',
+	                    { className: 'row', id: 'top' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'form-group' },
+	                        { className: 'col-md-12' },
 	                        _react2.default.createElement(
-	                            'select',
-	                            { className: 'form-control' },
+	                            'p',
+	                            null,
 	                            _react2.default.createElement(
-	                                'option',
-	                                null,
-	                                'APA'
+	                                'button',
+	                                { className: 'btn btn-primary btn-lg create-tournament', id: 'create-tournament', href: '#', role: 'button' },
+	                                'Skapa turnering'
 	                            )
 	                        )
-	                    ),
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row', id: 'middle' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement('input', { type: 'number', id: 'homeGoals', className: 'form-control', placeholder: 'Mål för hemmalaget' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement('input', { type: 'number', id: 'awayGoals', className: 'form-control', placeholder: 'Mål för bortalaget' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { type: 'button', className: 'btn btn-primary btn-set-game-result' },
-	                        'Lägg till'
+	                        { className: 'col-md-12' },
+	                        _react2.default.createElement(_TournamentList2.default, null)
 	                    )
 	                )
 	            );
 	        }
 	    }]);
 	
-	    return GameForm;
+	    return Start;
 	}(_react2.default.Component);
 	
-	exports.default = GameForm;
+	exports.default = Start;
 
 /***/ }
 /******/ ]);
