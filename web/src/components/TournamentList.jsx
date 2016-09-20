@@ -31,7 +31,7 @@ export default class TournamentList extends React.Component {
             return (<Loader />);
         }
         return (
-            <div className="view tournament-list">
+            <section className="view tournament-list">
                 <ReactCSSTransitionGroup transitionName="q-anim"
                                          transitionAppear={true}
                                          transitionAppearTimeout={500}
@@ -46,7 +46,7 @@ export default class TournamentList extends React.Component {
                         })}
                     </ul>
                 </ReactCSSTransitionGroup>
-</div>);
+            </section>);
 
     }
 }

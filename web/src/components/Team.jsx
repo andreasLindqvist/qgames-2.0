@@ -28,15 +28,16 @@ export default class Team extends React.Component {
     render() {
         console.log('render Team');
         if (!this.state.loadingDone) {
+            console.log('render Team LOADER');
             return (<Loader />);
         }
         return (
             <div className="view team">
                 <ReactCSSTransitionGroup transitionName="q-anim"
             transitionAppear={true}
-            transitionAppearTimeout={500}
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}>
+            transitionAppearTimeout={300}
+            transitionEnterTimeout={300}
+            transitionLeaveTimeout={200}>
                     <h2>{this.state.data.name}</h2>
                     <p><strong>Spelar-ID:</strong> {this.state.data.playerId}</p>
                 </ReactCSSTransitionGroup>

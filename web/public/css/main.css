@@ -4,12 +4,22 @@
    Author's custom styles
    ========================================================================== */
 
+
 .row {
     display: flex;
 }
 .col-md-4 {
     display: flex;
     flex-direction: column;
+}
+
+.navbar-brand {
+    font-size: 2.25em;
+}
+
+.create-tournament {
+    margin: 20px auto;
+    display: block;
 }
 
 .loader {

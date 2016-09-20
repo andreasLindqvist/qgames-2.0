@@ -17,13 +17,13 @@ import TestComponent from './components/TestComponent';
 import Tournament from './components/Tournament';
 import TournamentList from './components/TournamentList';
 import Team from './components/Team';
+import Start from './components/Start';
 
 console.log('apan3');
 
 ReactDOM.render((
 <Router>
-    <Route path="/" component={TestComponent} />
-    <Route path="/apa" component={TestComponent} />
+    <Route path="/" component={Start} />
     <Route path="/tournament" component={TournamentList} />
     <Route path="/tournament/:id" component={Tournament} />
     <Route path="/team/:id" component={Team} />
