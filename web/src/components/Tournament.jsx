@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Loader from './Loader';
+import Table from './Table';
 
 export default class Tournament extends React.Component {
     constructor() {
@@ -9,13 +10,24 @@ export default class Tournament extends React.Component {
         this.state = { data: { name: 'Apa', teams: []}, loading: true };
     }
     componentDidMount() {
-        this.loadTournamentFromServer();
+        this.getTournament();
     }
-    loadTournamentFromServer() {
+    getTournament() {
         console.log(config.webapi.tournaments);
         console.log(`${config.webapi.tournaments}/${this.props.params.id}`);
-        let url = `${config.webapi.tournaments}/${this.props.params.id}/details`;
-        $.ajax({
+        let url = `${config.webapi.tournaments}/${this.props.params.id}asas/details`;
+        let _this = this;
+        fetch(url)
+            .then(function(response) {
+                return response.json();
+            })
+            .then((json) => {
+                this.setState({ data: json, loading: false})
+            })
+            .catch(function(err) {
+                console.error('FEL', err.toString());
+        });
+        /*$.ajax({
             url: url,
             dataType: 'json',
             cache: false,
@@ -25,7 +37,7 @@ export default class Tournament extends React.Component {
             error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
-        });
+        });*/
     }
     render() {
         console.log('render Tournament');
@@ -37,24 +49,11 @@ export default class Tournament extends React.Component {
         return (
             <div className="view tournament">
                 <ReactCSSTransitionGroup transitionName="q-anim"
-                                         transitionAppear={true}
-                                         transitionAppearTimeout={500}
-                                         transitionEnterTimeout={500} 
-                                         transitionLeaveTimeout={300}>
+                    transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={300}>
                     <div className="row" id="top">
                         <div className="col-md-12" >
                             <h2>{this.state.data.name}</h2>
-                            <ul>
-                                {this.state.data.teams.map(function(team) {
-                                let teamLink = `/#/team/${team._id}`;
-                                console.log(teamLink);
-                                return (
-                                    <li key={team._id} data-id={team._id}>
-                                        <a href={teamLink}>{team.name}</a>
-                                    </li>
-                                );
-                                })}
-</ul>
+                            <Table games={this.state.data.games} teams={this.state.data.teams} />
                         </div>
                     </div>
                     <div className="row" id="middle">
