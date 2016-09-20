@@ -92,7 +92,7 @@
 	var apa = 123;
 	
 	
-	console.log('apan3');
+	console.log('common');
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,

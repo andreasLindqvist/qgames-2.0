@@ -19,7 +19,7 @@ import TournamentList from './components/TournamentList';
 import Team from './components/Team';
 import Start from './components/Start';
 
-console.log('apan3');
+console.log('common');
 
 ReactDOM.render((
 <Router>
