@@ -7,7 +7,7 @@ import Table from './Table';
 export default class Tournament extends React.Component {
     constructor() {
         super();
-        this.state = { data: { name: 'Apa', teams: []}, loading: true };
+        this.state = { data: { name: 'Ingen turnering?', teams: [], games: []}, loading: true };
     }
     componentDidMount() {
         this.getTournament();
@@ -15,29 +15,26 @@ export default class Tournament extends React.Component {
     getTournament() {
         console.log(config.webapi.tournaments);
         console.log(`${config.webapi.tournaments}/${this.props.params.id}`);
-        let url = `${config.webapi.tournaments}/${this.props.params.id}asas/details`;
+        let url = `${config.webapi.tournaments}/${this.props.params.id}/details`;
         let _this = this;
         fetch(url)
             .then(function(response) {
+                console.log('THEN');
+                if (!response.ok) {
+                    console.log('EJ OK', response);
+                    let { status, statusText } = response;
+                    throw new Error(statusText);
+                }
                 return response.json();
             })
             .then((json) => {
-                this.setState({ data: json, loading: false})
+                this.setState({ data: json, loading: false});
             })
-            .catch(function(err) {
-                console.error('FEL', err.toString());
+            .catch((err) => {
+                console.error('FEL', err);
+                this.setState({ data: { name: 'Fel: ' + err, teams: [], games: [] }, loading: false });
+                
         });
-        /*$.ajax({
-            url: url,
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({ data: data, loading: false});
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });*/
     }
     render() {
         console.log('render Tournament');
@@ -45,7 +42,6 @@ export default class Tournament extends React.Component {
             return (<Loader />);
         }
         console.log(this.state.data.teams);
-        console.log(this.state.data.teams[0]);
         return (
             <div className="view tournament">
                 <ReactCSSTransitionGroup transitionName="q-anim"

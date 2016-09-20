@@ -26852,7 +26852,7 @@
 	
 	        var _this2 = _possibleConstructorReturn(this, (Tournament.__proto__ || Object.getPrototypeOf(Tournament)).call(this));
 	
-	        _this2.state = { data: { name: 'Apa', teams: [] }, loading: true };
+	        _this2.state = { data: { name: 'Ingen turnering?', teams: [], games: [] }, loading: true };
 	        return _this2;
 	    }
 	
@@ -26868,26 +26868,24 @@
 	
 	            console.log(_config2.default.webapi.tournaments);
 	            console.log(_config2.default.webapi.tournaments + '/' + this.props.params.id);
-	            var url = _config2.default.webapi.tournaments + '/' + this.props.params.id + 'asas/details';
+	            var url = _config2.default.webapi.tournaments + '/' + this.props.params.id + '/details';
 	            var _this = this;
 	            fetch(url).then(function (response) {
+	                console.log('THEN');
+	                if (!response.ok) {
+	                    console.log('EJ OK', response);
+	                    var status = response.status;
+	                    var statusText = response.statusText;
+	
+	                    throw new Error(statusText);
+	                }
 	                return response.json();
 	            }).then(function (json) {
 	                _this3.setState({ data: json, loading: false });
 	            }).catch(function (err) {
-	                console.error('FEL', err.toString());
+	                console.error('FEL', err);
+	                _this3.setState({ data: { name: 'Fel: ' + err, teams: [], games: [] }, loading: false });
 	            });
-	            /*$.ajax({
-	                url: url,
-	                dataType: 'json',
-	                cache: false,
-	                success: function (data) {
-	                    this.setState({ data: data, loading: false});
-	                }.bind(this),
-	                error: function (xhr, status, err) {
-	                    console.error(this.props.url, status, err.toString());
-	                }.bind(this)
-	            });*/
 	        }
 	    }, {
 	        key: 'render',
@@ -26897,7 +26895,6 @@
 	                return _react2.default.createElement(_Loader2.default, null);
 	            }
 	            console.log(this.state.data.teams);
-	            console.log(this.state.data.teams[0]);
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'view tournament' },
