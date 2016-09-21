@@ -4,23 +4,20 @@
    Author's custom styles
    ========================================================================== */
 
+/* --- Bootstrap overrides --- */
 
-.row {
-    display: flex;
-}
-.col-md-4 {
-    display: flex;
-    flex-direction: column;
-}
 
 .navbar-brand {
     font-size: 2.25em;
 }
 
+/* --- --- */
+
 .create-tournament {
     margin: 20px auto;
     display: block;
 }
+
 
 .loader {
     flex: 1;
@@ -66,11 +63,62 @@
   transition: opacity .5s ease-in;
 }
 
+.table {
+    display: flex;
+    flex-direction: column;
+}
+.table .team {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.table .team:not(:last-child) {
+    border-bottom: solid 1px #eee;
+}
+.table .team:nth-child(2n + 3) {
+    background-color: #fafafa;
+}
+.table .team.table-header {
+    font-weight: bold;
+    border-bottom: solid 1px #aaa;
+}
+
+.table .team .column {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+}
+.table .team .column.team-name {
+    flex: inherit;
+    width: 33%;
+    text-align: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.table .team .column.points {
+    font-weight: bold;
+}
+.table .team .logo {
+    max-width: 40px;
+    max-height: 40px;
+    margin-right: 10px;
+}
 
 
 
 
-
-
-
+@media (max-width: 767px) {
+    .table .team .logo {
+        max-width: 30px;
+        max-height: 30px;
+    }
+}
+@media (max-width: 460px) {
+    .table .team .logo {
+        max-width: 25px;
+        max-height: 25px;
+        margin-right: 5px;
+    }
+}
 

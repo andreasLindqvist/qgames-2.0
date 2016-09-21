@@ -26866,14 +26866,11 @@
 	        value: function getTournament() {
 	            var _this3 = this;
 	
-	            console.log(_config2.default.webapi.tournaments);
-	            console.log(_config2.default.webapi.tournaments + '/' + this.props.params.id);
+	            console.log('getTournament: ' + _config2.default.webapi.tournaments + '/' + this.props.params.id);
 	            var url = _config2.default.webapi.tournaments + '/' + this.props.params.id + '/details';
 	            var _this = this;
 	            fetch(url).then(function (response) {
-	                console.log('THEN');
 	                if (!response.ok) {
-	                    console.log('EJ OK', response);
 	                    var status = response.status;
 	                    var statusText = response.statusText;
 	
@@ -26883,7 +26880,7 @@
 	            }).then(function (json) {
 	                _this3.setState({ data: json, loading: false });
 	            }).catch(function (err) {
-	                console.error('FEL', err);
+	                console.log('FEL', err);
 	                _this3.setState({ data: { name: 'Fel: ' + err, teams: [], games: [] }, loading: false });
 	            });
 	        }
@@ -26907,7 +26904,7 @@
 	                        { className: 'row', id: 'top' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'col-md-12' },
+	                            { className: 'col-xs-12' },
 	                            _react2.default.createElement(
 	                                'h2',
 	                                null,
@@ -26921,7 +26918,7 @@
 	                        { className: 'row', id: 'middle' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'col-md-6', id: 'middle-left' },
+	                            { className: 'col-sm-6 col-xs-12', id: 'middle-left' },
 	                            _react2.default.createElement(
 	                                'h3',
 	                                null,
@@ -26930,7 +26927,7 @@
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'col-md-6', id: 'middle-right' },
+	                            { className: 'col-sm-6 col-xs-12', id: 'middle-right' },
 	                            _react2.default.createElement(
 	                                'h3',
 	                                null,
@@ -28212,46 +28209,189 @@
 	    _createClass(Table, [{
 	        key: 'render',
 	        value: function render() {
-	            console.log('render Table');
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'ul',
+	            if (!this.props.teams || this.props.teams.length == 0 || !this.props.games || this.props.games.length == 0) {
+	                return _react2.default.createElement(
+	                    'div',
 	                    null,
-	                    this.props.teams.map(function (team) {
-	                        var teamLink = '/#/team/' + team._id;
-	                        console.log(teamLink);
-	                        return _react2.default.createElement(
-	                            'li',
-	                            { key: team._id, 'data-id': team._id },
+	                    'Ingen tabell'
+	                );
+	            }
+	            console.log('render Table');
+	            var table = this.props.teams.map(function (team) {
+	                return { _id: team._id, name: team.name, logo: team.logo, played: 0, wins: 0, draws: 0, losses: 0, scored: 0, conceded: 0, points: 0 };
+	            });
+	            var numGames = this.props.games.length;
+	            for (var i = 0; i < numGames; i++) {
+	                var game = this.props.games[i];
+	                var homeTeam = table.find(function (team) {
+	                    return team._id == game.homeTeam.id;
+	                });
+	                var awayTeam = table.find(function (team) {
+	                    return team._id == game.awayTeam.id;
+	                });
+	                if (!homeTeam || !awayTeam) continue;
+	                homeTeam.played++;
+	                awayTeam.played++;
+	                homeTeam.scored += game.homeTeam.goals;
+	                homeTeam.conceded += game.awayTeam.goals;
+	                awayTeam.scored += game.awayTeam.goals;
+	                awayTeam.conceded += game.homeTeam.goals;
+	                if (game.homeTeam.goals > game.awayTeam.goals) {
+	                    console.log('hemma!');
+	                    homeTeam.wins++;
+	                    awayTeam.losses++;
+	                    homeTeam.points += 3;
+	                } else if (game.homeTeam.goals < game.awayTeam.goals) {
+	                    console.log('hemma!');
+	                    awayTeam.wins++;
+	                    homeTeam.losses++;
+	                    awayTeam.points += 3;
+	                } else {
+	                    console.log('lika!');
+	                    awayTeam.draws++;
+	                    homeTeam.draws++;
+	                    homeTeam.points += 1;
+	                    awayTeam.points += 1;
+	                }
+	            }
+	            table.sort(function (team1, team2) {
+	                if (team1.points > team2.points) {
+	                    return -1;
+	                } else if (team1.points < team2.points) {
+	                    return 1;
+	                } else if (team1.scored - team1.conceded > team2.scored - team2.conceded) {
+	                    return -1;
+	                } else if (team1.scored - team1.conceded < team2.scored - team2.conceded) {
+	                    return 1;
+	                } else if (team1.scored > team2.scored) {
+	                    return -1;
+	                } else if (team1.scored < team2.scored) {
+	                    return 1;
+	                } else {
+	                    return team1.name < team2.name ? -1 : 1;
+	                }
+	            });
+	            return _react2.default.createElement(
+	                'ul',
+	                { className: 'table' },
+	                _react2.default.createElement(
+	                    'li',
+	                    { className: 'team table-header' },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column position' },
+	                        '#'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column team-name' },
+	                        ' '
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column played' },
+	                        'P'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column wins' },
+	                        'W'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column draws' },
+	                        'D'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column losses' },
+	                        'L'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column scored' },
+	                        '+'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column conceded' },
+	                        '-'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column goaldifference' },
+	                        '+/-'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column points' },
+	                        'Poäng'
+	                    )
+	                ),
+	                table.map(function (team, index) {
+	                    var teamLink = '/#/team/' + team._id;
+	                    console.log(teamLink);
+	                    return _react2.default.createElement(
+	                        'li',
+	                        { key: team._id, 'data-id': team._id, className: 'team' },
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column position' },
+	                            index + 1
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column team-name' },
+	                            _react2.default.createElement('img', { className: 'logo', src: team.logo }),
 	                            _react2.default.createElement(
 	                                'a',
 	                                { href: teamLink },
 	                                team.name
 	                            )
-	                        );
-	                    })
-	                ),
-	                _react2.default.createElement(
-	                    'ul',
-	                    null,
-	                    this.props.games.map(function (game) {
-	                        var gameLink = '/#/game/' + game._id;
-	                        console.log(gameLink);
-	                        return _react2.default.createElement(
-	                            'li',
-	                            { key: game._id, 'data-id': game._id },
-	                            _react2.default.createElement(
-	                                'a',
-	                                { href: gameLink },
-	                                game.homeTeam.goals,
-	                                ' - ',
-	                                game.awayTeam.goals
-	                            )
-	                        );
-	                    })
-	                )
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column played' },
+	                            team.played
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column wins' },
+	                            team.wins
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column draws' },
+	                            team.draws
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column losses' },
+	                            team.losses
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column scored' },
+	                            team.scored
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column conceded' },
+	                            team.conceded
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column difference' },
+	                            team.scored - team.conceded > 1 ? '+' : '',
+	                            team.scored - team.conceded
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column points' },
+	                            team.points
+	                        )
+	                    );
+	                })
 	            );
 	        }
 	    }]);
