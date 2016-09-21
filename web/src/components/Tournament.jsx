@@ -51,7 +51,7 @@ export default class Tournament extends React.Component {
                     </div>
                     <div className="row" id="middle">
                         <div className="col-sm-6 col-xs-12" id="middle-left" >
-                            <h3>Played</h3>
+                            <GamesPlayed games={this.state.data.games} teams={this.state.data.teams} />
                         </div>
                         <div className="col-sm-6 col-xs-12" id="middle-right">
                             <h3>Not played</h3>

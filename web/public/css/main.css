@@ -88,7 +88,7 @@
     text-align: center;
     padding: 10px 0;
 }
-.table .team .column.team-name {
+.table .team .column.name {
     flex: inherit;
     width: 33%;
     text-align: inherit;

@@ -83,7 +83,7 @@ export default class Table extends React.Component {
                 return (
                             <li key={team._id} data-id={team._id} className="team">
                                 <span className="column position">{index + 1}</span>
-                                <span className="column team-name"><img className="logo" src={team.logo} /><a href={teamLink}>{team.name}</a></span>
+                                <span className="column name"><img className="logo" src={team.logo} /><a href={teamLink}>{team.name}</a></span>
                                 <span className="column played">{team.played}</span>
                                 <span className="column wins">{team.wins}</span>
                                 <span className="column draws">{team.draws}</span>
