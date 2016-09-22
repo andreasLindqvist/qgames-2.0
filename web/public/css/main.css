@@ -18,8 +18,11 @@ input[type='text'], select, textarea {
     display: block;
     width: 100%;
 }
-input[type='text'].half-width, select.half-width, textarea.half-width {
-    width: 49%;
+.item.horizontal input[type='text'].half-width, .item.horizontal select.half-width, .item.horizontal textarea.half-width {
+    flex: 1;
+}
+.item.horizontal input[type='text'].half-width:not(:last-child), .item.horizontal select.half-width:not(:last-child), .item.horizontal textarea.half-width:not(:last-child) {
+    margin-right: 10px;
 }
 label {
     text-transform: uppercase;
@@ -49,8 +52,8 @@ label {
 
 
 .create-tournament {
-    margin: 20px auto;
-    display: block;
+    margin: 20px auto 0;
+    display: inline-block;
 }
 
 .tournament-form {
@@ -147,6 +150,22 @@ label {
     border: solid 1px #eee;
 }
 
+.medal {
+    font-weight: bold;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+.medal.gold {
+    background-color:gold;
+}
+.medal.silver {
+    background-color:silver;
+}
+.medal.bronze {
+    background-color: #CD7F32;
+}
 
 
 
