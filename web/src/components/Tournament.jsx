@@ -3,6 +3,7 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Loader from './Loader';
 import Table from './Table';
+import GamesPlayed from './GamesPlayed';
 
 export default class Tournament extends React.Component {
     constructor() {
@@ -54,7 +55,7 @@ export default class Tournament extends React.Component {
                     </div>
                     <div className="row" id="middle">
                         <div className="col-md-6" id="middle-left" >
-                            <h3>Played</h3>
+                            <GamesPlayed id={ this.props.params.id } />                            
                         </div>
                         <div className="col-md-6" id="middle-right">
                             <h3>Not played</h3>

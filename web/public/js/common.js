@@ -64,15 +64,15 @@
 	
 	var _Tournament2 = _interopRequireDefault(_Tournament);
 	
-	var _TournamentList = __webpack_require__(244);
+	var _TournamentList = __webpack_require__(246);
 	
 	var _TournamentList2 = _interopRequireDefault(_TournamentList);
 	
-	var _Team = __webpack_require__(245);
+	var _Team = __webpack_require__(247);
 	
 	var _Team2 = _interopRequireDefault(_Team);
 	
-	var _Start = __webpack_require__(246);
+	var _Start = __webpack_require__(248);
 	
 	var _Start2 = _interopRequireDefault(_Start);
 	
@@ -26832,9 +26832,13 @@
 	
 	var _Loader2 = _interopRequireDefault(_Loader);
 	
-	var _Table = __webpack_require__(247);
+	var _Table = __webpack_require__(244);
 	
 	var _Table2 = _interopRequireDefault(_Table);
+	
+	var _GamesPlayed = __webpack_require__(245);
+	
+	var _GamesPlayed2 = _interopRequireDefault(_GamesPlayed);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26922,11 +26926,7 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'col-md-6', id: 'middle-left' },
-	                            _react2.default.createElement(
-	                                'h3',
-	                                null,
-	                                'Played'
-	                            )
+	                            _react2.default.createElement(_GamesPlayed2.default, { id: this.props.params.id })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
@@ -27869,6 +27869,205 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Table = function (_React$Component) {
+	    _inherits(Table, _React$Component);
+	
+	    function Table() {
+	        _classCallCheck(this, Table);
+	
+	        return _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).apply(this, arguments));
+	    }
+	
+	    _createClass(Table, [{
+	        key: 'render',
+	        value: function render() {
+	            console.log('render Table');
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'ul',
+	                    null,
+	                    this.props.teams.map(function (team) {
+	                        var teamLink = '/#/team/' + team._id;
+	                        console.log(teamLink);
+	                        return _react2.default.createElement(
+	                            'li',
+	                            { key: team._id, 'data-id': team._id },
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: teamLink },
+	                                team.name
+	                            )
+	                        );
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    null,
+	                    this.props.games.map(function (game) {
+	                        var gameLink = '/#/game/' + game._id;
+	                        console.log(gameLink);
+	                        return _react2.default.createElement(
+	                            'li',
+	                            { key: game._id, 'data-id': game._id },
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: gameLink },
+	                                game.homeTeam.goals,
+	                                ' - ',
+	                                game.awayTeam.goals
+	                            )
+	                        );
+	                    })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Table;
+	}(_react2.default.Component);
+	
+	exports.default = Table;
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _config = __webpack_require__(235);
+	
+	var _config2 = _interopRequireDefault(_config);
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactAddonsCssTransitionGroup = __webpack_require__(236);
+	
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var GamesPlayed = function (_React$Component) {
+	    _inherits(GamesPlayed, _React$Component);
+	
+	    function GamesPlayed() {
+	        _classCallCheck(this, GamesPlayed);
+	
+	        var _this = _possibleConstructorReturn(this, (GamesPlayed.__proto__ || Object.getPrototypeOf(GamesPlayed)).call(this));
+	
+	        _this.state = { data: {} };
+	        return _this;
+	    }
+	    //componentDidMount() {
+	    //    this.getGamesPlayed();
+	    //}
+	    //getGamesPlayed() {
+	    //    console.log('getGamesPlayed', this.props.id);
+	    //    let url = `${config.webapi.tournaments}/${this.props.id}/games/played`;
+	    //    fetch(url)
+	    //    .then(function(response) {
+	    //        return response.json()
+	    //    })
+	    //    .then((json) => {
+	    //        console.log('json', json);
+	    //        this.setState({ data: json });
+	    //    });
+	    //}
+	
+	
+	    _createClass(GamesPlayed, [{
+	        key: 'render',
+	        value: function render() {
+	            console.log('GamesPlayed render', this.props.id);
+	            return _react2.default.createElement(
+	                'ul',
+	                null,
+	                this.state.data.map(function (game) {
+	                    return _react2.default.createElement(
+	                        'li',
+	                        { key: game._id, className: 'table' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'team' },
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'column logo' },
+	                                '//',
+	                                _react2.default.createElement('img', { src: '{game.}', game: true })
+	                            ),
+	                            _react2.default.createElement('span', { className: 'column name' }),
+	                            _react2.default.createElement('span', { className: 'column goals' })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'team' },
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'column logo' },
+	                                '//',
+	                                _react2.default.createElement('img', { src: '{game.}', game: true })
+	                            ),
+	                            _react2.default.createElement('span', { className: 'column name' }),
+	                            _react2.default.createElement('span', { className: 'column goals' })
+	                        )
+	                    );
+	                })
+	            )
+	            //                                <ul>
+	            //                        {this.state.data.map(function(tournament) {
+	            //                            return (
+	            //                                <li key={tournament._id} data-id={tournament.id}><a href={`/#/tournament/${tournament._id}`}>{tournament.name}</a></li>
+	            //                                );
+	            //})}
+	            //                    </ul>             
+	            ;
+	        }
+	    }]);
+	
+	    return GamesPlayed;
+	}(_react2.default.Component);
+	
+	exports.default = GamesPlayed;
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _config = __webpack_require__(235);
 	
 	var _config2 = _interopRequireDefault(_config);
@@ -27974,7 +28173,7 @@
 	exports.default = TournamentList;
 
 /***/ },
-/* 245 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28086,7 +28285,7 @@
 	exports.default = Team;
 
 /***/ },
-/* 246 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28113,7 +28312,7 @@
 	
 	var _Loader2 = _interopRequireDefault(_Loader);
 	
-	var _TournamentList = __webpack_require__(244);
+	var _TournamentList = __webpack_require__(246);
 	
 	var _TournamentList2 = _interopRequireDefault(_TournamentList);
 	
@@ -28174,91 +28373,6 @@
 	}(_react2.default.Component);
 	
 	exports.default = Start;
-
-/***/ },
-/* 247 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Table = function (_React$Component) {
-	    _inherits(Table, _React$Component);
-	
-	    function Table() {
-	        _classCallCheck(this, Table);
-	
-	        return _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).apply(this, arguments));
-	    }
-	
-	    _createClass(Table, [{
-	        key: 'render',
-	        value: function render() {
-	            console.log('render Table');
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'ul',
-	                    null,
-	                    this.props.teams.map(function (team) {
-	                        var teamLink = '/#/team/' + team._id;
-	                        console.log(teamLink);
-	                        return _react2.default.createElement(
-	                            'li',
-	                            { key: team._id, 'data-id': team._id },
-	                            _react2.default.createElement(
-	                                'a',
-	                                { href: teamLink },
-	                                team.name
-	                            )
-	                        );
-	                    })
-	                ),
-	                _react2.default.createElement(
-	                    'ul',
-	                    null,
-	                    this.props.games.map(function (game) {
-	                        var gameLink = '/#/game/' + game._id;
-	                        console.log(gameLink);
-	                        return _react2.default.createElement(
-	                            'li',
-	                            { key: game._id, 'data-id': game._id },
-	                            _react2.default.createElement(
-	                                'a',
-	                                { href: gameLink },
-	                                game.homeTeam.goals,
-	                                ' - ',
-	                                game.awayTeam.goals
-	                            )
-	                        );
-	                    })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Table;
-	}(_react2.default.Component);
-	
-	exports.default = Table;
 
 /***/ }
 /******/ ]);
