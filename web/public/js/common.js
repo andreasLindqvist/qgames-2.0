@@ -26836,10 +26836,6 @@
 	
 	var _Table2 = _interopRequireDefault(_Table);
 	
-	var _GamesPlayed = __webpack_require__(245);
-	
-	var _GamesPlayed2 = _interopRequireDefault(_GamesPlayed);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26870,14 +26866,11 @@
 	        value: function getTournament() {
 	            var _this3 = this;
 	
-	            console.log(_config2.default.webapi.tournaments);
-	            console.log(_config2.default.webapi.tournaments + '/' + this.props.params.id);
+	            console.log('getTournament: ' + _config2.default.webapi.tournaments + '/' + this.props.params.id);
 	            var url = _config2.default.webapi.tournaments + '/' + this.props.params.id + '/details';
 	            var _this = this;
 	            fetch(url).then(function (response) {
-	                console.log('THEN');
 	                if (!response.ok) {
-	                    console.log('EJ OK', response);
 	                    var status = response.status;
 	                    var statusText = response.statusText;
 	
@@ -26887,7 +26880,7 @@
 	            }).then(function (json) {
 	                _this3.setState({ data: json, loading: false });
 	            }).catch(function (err) {
-	                console.error('FEL', err);
+	                console.log('FEL', err);
 	                _this3.setState({ data: { name: 'Fel: ' + err, teams: [], games: [] }, loading: false });
 	            });
 	        }
@@ -26911,7 +26904,7 @@
 	                        { className: 'row', id: 'top' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'col-md-12' },
+	                            { className: 'col-xs-12' },
 	                            _react2.default.createElement(
 	                                'h2',
 	                                null,
@@ -26925,12 +26918,12 @@
 	                        { className: 'row', id: 'middle' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'col-md-6', id: 'middle-left' },
-	                            _react2.default.createElement(_GamesPlayed2.default, { id: this.props.params.id })
+	                            { className: 'col-sm-6 col-xs-12', id: 'middle-left' },
+	                            _react2.default.createElement(GamesPlayed, { games: this.state.data.games, teams: this.state.data.teams })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'col-md-6', id: 'middle-right' },
+	                            { className: 'col-sm-6 col-xs-12', id: 'middle-right' },
 	                            _react2.default.createElement(
 	                                'h3',
 	                                null,
@@ -27893,46 +27886,189 @@
 	    _createClass(Table, [{
 	        key: 'render',
 	        value: function render() {
-	            console.log('render Table');
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'ul',
+	            if (!this.props.teams || this.props.teams.length == 0 || !this.props.games || this.props.games.length == 0) {
+	                return _react2.default.createElement(
+	                    'div',
 	                    null,
-	                    this.props.teams.map(function (team) {
-	                        var teamLink = '/#/team/' + team._id;
-	                        console.log(teamLink);
-	                        return _react2.default.createElement(
-	                            'li',
-	                            { key: team._id, 'data-id': team._id },
+	                    'Ingen tabell'
+	                );
+	            }
+	            console.log('render Table');
+	            var table = this.props.teams.map(function (team) {
+	                return { _id: team._id, name: team.name, logo: team.logo, played: 0, wins: 0, draws: 0, losses: 0, scored: 0, conceded: 0, points: 0 };
+	            });
+	            var numGames = this.props.games.length;
+	            for (var i = 0; i < numGames; i++) {
+	                var game = this.props.games[i];
+	                var homeTeam = table.find(function (team) {
+	                    return team._id == game.homeTeam.id;
+	                });
+	                var awayTeam = table.find(function (team) {
+	                    return team._id == game.awayTeam.id;
+	                });
+	                if (!homeTeam || !awayTeam) continue;
+	                homeTeam.played++;
+	                awayTeam.played++;
+	                homeTeam.scored += game.homeTeam.goals;
+	                homeTeam.conceded += game.awayTeam.goals;
+	                awayTeam.scored += game.awayTeam.goals;
+	                awayTeam.conceded += game.homeTeam.goals;
+	                if (game.homeTeam.goals > game.awayTeam.goals) {
+	                    console.log('hemma!');
+	                    homeTeam.wins++;
+	                    awayTeam.losses++;
+	                    homeTeam.points += 3;
+	                } else if (game.homeTeam.goals < game.awayTeam.goals) {
+	                    console.log('hemma!');
+	                    awayTeam.wins++;
+	                    homeTeam.losses++;
+	                    awayTeam.points += 3;
+	                } else {
+	                    console.log('lika!');
+	                    awayTeam.draws++;
+	                    homeTeam.draws++;
+	                    homeTeam.points += 1;
+	                    awayTeam.points += 1;
+	                }
+	            }
+	            table.sort(function (team1, team2) {
+	                if (team1.points > team2.points) {
+	                    return -1;
+	                } else if (team1.points < team2.points) {
+	                    return 1;
+	                } else if (team1.scored - team1.conceded > team2.scored - team2.conceded) {
+	                    return -1;
+	                } else if (team1.scored - team1.conceded < team2.scored - team2.conceded) {
+	                    return 1;
+	                } else if (team1.scored > team2.scored) {
+	                    return -1;
+	                } else if (team1.scored < team2.scored) {
+	                    return 1;
+	                } else {
+	                    return team1.name < team2.name ? -1 : 1;
+	                }
+	            });
+	            return _react2.default.createElement(
+	                'ul',
+	                { className: 'table' },
+	                _react2.default.createElement(
+	                    'li',
+	                    { className: 'team table-header' },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column position' },
+	                        '#'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column team-name' },
+	                        ' '
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column played' },
+	                        'P'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column wins' },
+	                        'W'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column draws' },
+	                        'D'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column losses' },
+	                        'L'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column scored' },
+	                        '+'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column conceded' },
+	                        '-'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column goaldifference' },
+	                        '+/-'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'column points' },
+	                        'Poäng'
+	                    )
+	                ),
+	                table.map(function (team, index) {
+	                    var teamLink = '/#/team/' + team._id;
+	                    console.log(teamLink);
+	                    return _react2.default.createElement(
+	                        'li',
+	                        { key: team._id, 'data-id': team._id, className: 'team' },
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column position' },
+	                            index + 1
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column name' },
+	                            _react2.default.createElement('img', { className: 'logo', src: team.logo }),
 	                            _react2.default.createElement(
 	                                'a',
 	                                { href: teamLink },
 	                                team.name
 	                            )
-	                        );
-	                    })
-	                ),
-	                _react2.default.createElement(
-	                    'ul',
-	                    null,
-	                    this.props.games.map(function (game) {
-	                        var gameLink = '/#/game/' + game._id;
-	                        console.log(gameLink);
-	                        return _react2.default.createElement(
-	                            'li',
-	                            { key: game._id, 'data-id': game._id },
-	                            _react2.default.createElement(
-	                                'a',
-	                                { href: gameLink },
-	                                game.homeTeam.goals,
-	                                ' - ',
-	                                game.awayTeam.goals
-	                            )
-	                        );
-	                    })
-	                )
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column played' },
+	                            team.played
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column wins' },
+	                            team.wins
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column draws' },
+	                            team.draws
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column losses' },
+	                            team.losses
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column scored' },
+	                            team.scored
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column conceded' },
+	                            team.conceded
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column difference' },
+	                            team.scored - team.conceded > 1 ? '+' : '',
+	                            team.scored - team.conceded
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'column points' },
+	                            team.points
+	                        )
+	                    );
+	                })
 	            );
 	        }
 	    }]);
@@ -27943,120 +28079,7 @@
 	exports.default = Table;
 
 /***/ },
-/* 245 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _config = __webpack_require__(235);
-	
-	var _config2 = _interopRequireDefault(_config);
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactAddonsCssTransitionGroup = __webpack_require__(236);
-	
-	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var GamesPlayed = function (_React$Component) {
-	    _inherits(GamesPlayed, _React$Component);
-	
-	    function GamesPlayed() {
-	        _classCallCheck(this, GamesPlayed);
-	
-	        var _this = _possibleConstructorReturn(this, (GamesPlayed.__proto__ || Object.getPrototypeOf(GamesPlayed)).call(this));
-	
-	        _this.state = { data: {} };
-	        return _this;
-	    }
-	    //componentDidMount() {
-	    //    this.getGamesPlayed();
-	    //}
-	    //getGamesPlayed() {
-	    //    console.log('getGamesPlayed', this.props.id);
-	    //    let url = `${config.webapi.tournaments}/${this.props.id}/games/played`;
-	    //    fetch(url)
-	    //    .then(function(response) {
-	    //        return response.json()
-	    //    })
-	    //    .then((json) => {
-	    //        console.log('json', json);
-	    //        this.setState({ data: json });
-	    //    });
-	    //}
-	
-	
-	    _createClass(GamesPlayed, [{
-	        key: 'render',
-	        value: function render() {
-	            console.log('GamesPlayed render', this.props.id);
-	            return _react2.default.createElement(
-	                'ul',
-	                null,
-	                this.state.data.map(function (game) {
-	                    return _react2.default.createElement(
-	                        'li',
-	                        { key: game._id, className: 'table' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'team' },
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'column logo' },
-	                                '//',
-	                                _react2.default.createElement('img', { src: '{game.}', game: true })
-	                            ),
-	                            _react2.default.createElement('span', { className: 'column name' }),
-	                            _react2.default.createElement('span', { className: 'column goals' })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'team' },
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'column logo' },
-	                                '//',
-	                                _react2.default.createElement('img', { src: '{game.}', game: true })
-	                            ),
-	                            _react2.default.createElement('span', { className: 'column name' }),
-	                            _react2.default.createElement('span', { className: 'column goals' })
-	                        )
-	                    );
-	                })
-	            )
-	            //                                <ul>
-	            //                        {this.state.data.map(function(tournament) {
-	            //                            return (
-	            //                                <li key={tournament._id} data-id={tournament.id}><a href={`/#/tournament/${tournament._id}`}>{tournament.name}</a></li>
-	            //                                );
-	            //})}
-	            //                    </ul>             
-	            ;
-	        }
-	    }]);
-	
-	    return GamesPlayed;
-	}(_react2.default.Component);
-	
-	exports.default = GamesPlayed;
-
-/***/ },
+/* 245 */,
 /* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
