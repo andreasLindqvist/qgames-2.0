@@ -68,6 +68,10 @@
 	
 	var _TournamentList2 = _interopRequireDefault(_TournamentList);
 	
+	var _CreateTournament = __webpack_require__(248);
+	
+	var _CreateTournament2 = _interopRequireDefault(_CreateTournament);
+	
 	var _Team = __webpack_require__(245);
 	
 	var _Team2 = _interopRequireDefault(_Team);
@@ -100,6 +104,7 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Start2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/tournament', component: _TournamentList2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/tournament/:id', component: _Tournament2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/createtournament', component: _CreateTournament2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/team/:id', component: _Team2.default })
 	), document.querySelector('#app'));
 	//getElementById('app'))
@@ -26850,10 +26855,10 @@
 	    function Tournament() {
 	        _classCallCheck(this, Tournament);
 	
-	        var _this2 = _possibleConstructorReturn(this, (Tournament.__proto__ || Object.getPrototypeOf(Tournament)).call(this));
+	        var _this = _possibleConstructorReturn(this, (Tournament.__proto__ || Object.getPrototypeOf(Tournament)).call(this));
 	
-	        _this2.state = { data: { name: 'Ingen turnering?', teams: [], games: [] }, loading: true };
-	        return _this2;
+	        _this.state = { data: { name: 'Ingen turnering?', teams: [], games: [] }, loading: true };
+	        return _this;
 	    }
 	
 	    _createClass(Tournament, [{
@@ -26864,11 +26869,10 @@
 	    }, {
 	        key: 'getTournament',
 	        value: function getTournament() {
-	            var _this3 = this;
+	            var _this2 = this;
 	
 	            console.log('getTournament: ' + _config2.default.webapi.tournaments + '/' + this.props.params.id);
 	            var url = _config2.default.webapi.tournaments + '/' + this.props.params.id + '/details';
-	            var _this = this;
 	            fetch(url).then(function (response) {
 	                if (!response.ok) {
 	                    var status = response.status;
@@ -26878,10 +26882,10 @@
 	                }
 	                return response.json();
 	            }).then(function (json) {
-	                _this3.setState({ data: json, loading: false });
+	                _this2.setState({ data: json, loading: false });
 	            }).catch(function (err) {
 	                console.log('FEL', err);
-	                _this3.setState({ data: { name: 'Fel: ' + err, teams: [], games: [] }, loading: false });
+	                _this2.setState({ data: { name: 'Fel: ' + err, teams: [], games: [] }, loading: false });
 	            });
 	        }
 	    }, {
@@ -26893,7 +26897,7 @@
 	            }
 	            console.log(this.state.data.teams);
 	            return _react2.default.createElement(
-	                'div',
+	                'section',
 	                { className: 'view tournament' },
 	                _react2.default.createElement(
 	                    _reactAddonsCssTransitionGroup2.default,
@@ -28145,13 +28149,9 @@
 	                        'div',
 	                        { className: 'col-md-12' },
 	                        _react2.default.createElement(
-	                            'p',
-	                            null,
-	                            _react2.default.createElement(
-	                                'button',
-	                                { className: 'btn btn-primary btn-lg create-tournament', id: 'create-tournament', href: '#', role: 'button' },
-	                                'Skapa turnering'
-	                            )
+	                            'a',
+	                            { className: 'btn btn-primary btn-lg create-tournament', id: 'create-tournament', href: '/#/createtournament', role: 'button' },
+	                            'Skapa turnering'
 	                        )
 	                    )
 	                ),
@@ -28284,7 +28284,7 @@
 	                    ),
 	                    _react2.default.createElement(
 	                        'span',
-	                        { className: 'column team-name' },
+	                        { className: 'column name' },
 	                        ' '
 	                    ),
 	                    _react2.default.createElement(
@@ -28341,11 +28341,11 @@
 	                        ),
 	                        _react2.default.createElement(
 	                            'span',
-	                            { className: 'column team-name' },
-	                            _react2.default.createElement('img', { className: 'logo', src: team.logo }),
+	                            { className: 'column name' },
 	                            _react2.default.createElement(
 	                                'a',
 	                                { href: teamLink },
+	                                _react2.default.createElement('img', { className: 'logo', src: team.logo }),
 	                                team.name
 	                            )
 	                        ),
@@ -28400,6 +28400,211 @@
 	}(_react2.default.Component);
 	
 	exports.default = Table;
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _config = __webpack_require__(235);
+	
+	var _config2 = _interopRequireDefault(_config);
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactAddonsCssTransitionGroup = __webpack_require__(236);
+	
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+	
+	var _Loader = __webpack_require__(243);
+	
+	var _Loader2 = _interopRequireDefault(_Loader);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CreateTournament = function (_React$Component) {
+	    _inherits(CreateTournament, _React$Component);
+	
+	    function CreateTournament() {
+	        _classCallCheck(this, CreateTournament);
+	
+	        var _this = _possibleConstructorReturn(this, (CreateTournament.__proto__ || Object.getPrototypeOf(CreateTournament)).call(this));
+	
+	        _this.state = { players: [], loading: true };
+	        return _this;
+	    }
+	
+	    _createClass(CreateTournament, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.getPlayers();
+	        }
+	    }, {
+	        key: 'getPlayers',
+	        value: function getPlayers() {
+	            var _this2 = this;
+	
+	            console.log('getPlayers: ' + _config2.default.webapi.players);
+	            var url = _config2.default.webapi.players;
+	            fetch(url).then(function (response) {
+	                if (!response.ok) {
+	                    var status = response.status;
+	                    var statusText = response.statusText;
+	
+	                    throw new Error(statusText);
+	                }
+	                return response.json();
+	            }).then(function (json) {
+	                _this2.setState({ players: json, loading: false });
+	            }).catch(function (err) {
+	                console.log('FEL', err);
+	                _this2.setState({ data: { name: 'Fel: ' + err, teams: [], games: [] }, loading: false });
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            console.log('render CreateTournament');
+	            if (this.state.loading) {
+	                return _react2.default.createElement(_Loader2.default, null);
+	            }
+	            return _react2.default.createElement(
+	                'section',
+	                { className: 'view create-tournament' },
+	                _react2.default.createElement(
+	                    _reactAddonsCssTransitionGroup2.default,
+	                    { transitionName: 'q-anim',
+	                        transitionAppear: true, transitionAppearTimeout: 500, transitionEnterTimeout: 500, transitionLeaveTimeout: 300 },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row', id: 'top' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-md-6 col-sm-12' },
+	                            _react2.default.createElement(
+	                                'h2',
+	                                null,
+	                                'Skapa turnering'
+	                            ),
+	                            _react2.default.createElement(
+	                                'form',
+	                                { className: 'tournament-form' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'item' },
+	                                    _react2.default.createElement('input', { type: 'text', id: 'name', placeholder: 'Turneringens namn' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'item' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { htmlFor: 'type' },
+	                                        'Typ'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'select',
+	                                        { id: 'type' },
+	                                        _react2.default.createElement(
+	                                            'option',
+	                                            { value: '0' },
+	                                            'Liga'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'option',
+	                                            { value: '1' },
+	                                            'Slutspel'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'option',
+	                                            { value: '2' },
+	                                            'Liga och slutspel'
+	                                        )
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    null,
+	                                    'Lag'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'item team horizontal' },
+	                                    _react2.default.createElement('input', { type: 'text', id: 'name', className: 'half-width', placeholder: 'Lagets namn' }),
+	                                    _react2.default.createElement(
+	                                        'select',
+	                                        { id: 'player', className: 'half-width' },
+	                                        _react2.default.createElement(
+	                                            'option',
+	                                            { value: '0' },
+	                                            '- Spelare -'
+	                                        ),
+	                                        this.state.players.map(function (player) {
+	                                            return _react2.default.createElement(
+	                                                'option',
+	                                                { key: player._id, value: '{player._id}' },
+	                                                player.name
+	                                            );
+	                                        })
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'item team horizontal' },
+	                                    _react2.default.createElement('input', { type: 'text', id: 'name', className: 'half-width', placeholder: 'Lagets namn' }),
+	                                    _react2.default.createElement(
+	                                        'select',
+	                                        { id: 'player', className: 'half-width' },
+	                                        _react2.default.createElement(
+	                                            'option',
+	                                            { value: '0' },
+	                                            '- Spelare -'
+	                                        ),
+	                                        this.state.players.map(function (player) {
+	                                            return _react2.default.createElement(
+	                                                'option',
+	                                                { key: player._id, value: '{player._id}' },
+	                                                player.name
+	                                            );
+	                                        })
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'item team' },
+	                                    _react2.default.createElement(
+	                                        'button',
+	                                        { className: 'btn plus' },
+	                                        '+'
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return CreateTournament;
+	}(_react2.default.Component);
+	
+	exports.default = CreateTournament;
 
 /***/ }
 /******/ ]);
