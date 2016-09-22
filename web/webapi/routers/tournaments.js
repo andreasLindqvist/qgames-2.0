@@ -111,6 +111,22 @@ router.route('/:tournament_id/details')
         }
     });
 
+router.route('/:tournament_id/games/played')
+    .get(function(req, res) {
+        Game.find({ 'tournament.id': req.params.tournament_id, played: { $ne: null } }).sort({ played: -1 }).exec(function (err, games) {
+            if(err)
+                res.send(err);
+            res.json(games);
+        });
+    });
 
+router.route('/:tournament_id/games/notplayed')
+    .get(function (req, res) {
+        Game.find({ 'tournament.id': req.params.tournament_id, played: null }).sort({ played: -1 }).exec(function (err, games) {
+            if (err)
+                res.send(err);
+            res.json(games);
+        });
+    });
 
 module.exports = router;
