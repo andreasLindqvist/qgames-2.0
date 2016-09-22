@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var TournamentSchema = new Schema({
     name: String,
+    type: Number,
     teams: [
         {
             id: String

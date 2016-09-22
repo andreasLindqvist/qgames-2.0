@@ -15,7 +15,6 @@ export default class Tournament extends React.Component {
     getTournament() {
         console.log(`getTournament: ${config.webapi.tournaments}/${this.props.params.id}`);
         let url = `${config.webapi.tournaments}/${this.props.params.id}/details`;
-        let _this = this;
         fetch(url)
             .then(function(response) {
                 if (!response.ok) {
@@ -40,7 +39,7 @@ export default class Tournament extends React.Component {
         }
         console.log(this.state.data.teams);
         return (
-            <div className="view tournament">
+            <section className="view tournament">
                 <ReactCSSTransitionGroup transitionName="q-anim"
                     transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={300}>
                     <div className="row" id="top">
@@ -51,13 +50,14 @@ export default class Tournament extends React.Component {
                     </div>
                     <div className="row" id="middle">
                         <div className="col-sm-6 col-xs-12" id="middle-left" >
-                            <GamesPlayed games={this.state.data.games} teams={this.state.data.teams} />
+                            
+                                <h3>Played</h3>
                         </div>
                         <div className="col-sm-6 col-xs-12" id="middle-right">
                             <h3>Not played</h3>
                         </div>
                     </div>
                 </ReactCSSTransitionGroup>
-</div>);
+</section>);
     }
 }

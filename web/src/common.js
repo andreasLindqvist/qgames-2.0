@@ -16,6 +16,7 @@ import { Router, Route } from 'react-router';
 import TestComponent from './components/TestComponent';
 import Tournament from './components/Tournament';
 import TournamentList from './components/TournamentList';
+import CreateTournament from './components/CreateTournament';
 import Team from './components/Team';
 import Start from './components/Start';
 
@@ -26,6 +27,7 @@ ReactDOM.render((
     <Route path="/" component={Start} />
     <Route path="/tournament" component={TournamentList} />
     <Route path="/tournament/:id" component={Tournament} />
+    <Route path="/createtournament" component={CreateTournament} />
     <Route path="/team/:id" component={Team} />
 </Router>
 ),document.querySelector('#app'))

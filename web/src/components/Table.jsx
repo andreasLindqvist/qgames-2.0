@@ -63,11 +63,14 @@ export default class Table extends React.Component {
                 return (team1.name < team2.name) ? -1 : 1;
             }
         });
+        const numRoundRobins = 2;
+        const totalNumGames = ((this.props.teams.length * (this.props.teams.length - 1)) / 2) * numRoundRobins;
+        var tableCompleted = (this.props.games.length == totalNumGames);
         return (
                         <ul className="table">
                 <li className="team table-header">
                     <span className="column position">#</span>
-                    <span className="column team-name">&nbsp;</span>
+                    <span className="column name">&nbsp;</span>
                     <span className="column played">P</span>
                     <span className="column wins">W</span>
                     <span className="column draws">D</span>
@@ -83,7 +86,7 @@ export default class Table extends React.Component {
                 return (
                             <li key={team._id} data-id={team._id} className="team">
                                 <span className="column position">{index + 1}</span>
-                                <span className="column name"><img className="logo" src={team.logo} /><a href={teamLink}>{team.name}</a></span>
+                                <span className="column name"><a href={teamLink}><img className="logo" src={team.logo} />{team.name}</a></span>
                                 <span className="column played">{team.played}</span>
                                 <span className="column wins">{team.wins}</span>
                                 <span className="column draws">{team.draws}</span>
@@ -95,7 +98,8 @@ export default class Table extends React.Component {
                             </li>
                 );
                 })}
-            </ul>
+</ul>
+<h4>{tableCompleted ? 'Färdigspelat!' : 'Inte färdigt'}</h4>
             );
     }
 }

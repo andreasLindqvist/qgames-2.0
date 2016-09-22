@@ -13,11 +13,51 @@
 
 /* --- --- */
 
+input[type='text'], select, textarea {
+    padding: 10px;
+    display: block;
+    width: 100%;
+}
+input[type='text'].half-width, select.half-width, textarea.half-width {
+    width: 49%;
+}
+label {
+    text-transform: uppercase;
+}
+.item {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.item.horizontal {
+    flex-direction: row;
+    justify-content: space-between;
+}
+.item.team {
+    margin-bottom: 10px;
+}
+.btn.plus {
+    display: inline;
+    background: #fff;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 2em;
+    line-height: 1;
+    border: solid 1px #999;
+    width: auto;
+}
+
+
 .create-tournament {
     margin: 20px auto;
     display: block;
 }
 
+.tournament-form {
+    margin: 20px 0;
+    padding: 20px;
+    border: solid 1px #eee;
+}
 
 .loader {
     flex: 1;
@@ -63,6 +103,7 @@
   transition: opacity .5s ease-in;
 }
 
+
 .table {
     display: flex;
     flex-direction: column;
@@ -103,6 +144,7 @@
     max-width: 40px;
     max-height: 40px;
     margin-right: 10px;
+    border: solid 1px #eee;
 }
 
 

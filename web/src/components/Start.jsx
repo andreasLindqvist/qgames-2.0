@@ -10,9 +10,7 @@ export default class Start extends React.Component {
             <div className="view">
                 <div className="row" id="top">
                     <div className="col-md-12" >
-                        <p>
-                            <button className="btn btn-primary btn-lg create-tournament" id="create-tournament" href="#" role="button">Skapa turnering</button>
-                        </p>
+                        <a className="btn btn-primary btn-lg create-tournament" id="create-tournament" href="/#/createtournament" role="button">Skapa turnering</a>
                     </div>
                 </div>
                 <div className="row" id="middle">
