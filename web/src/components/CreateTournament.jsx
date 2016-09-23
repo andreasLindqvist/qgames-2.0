@@ -6,7 +6,7 @@ import Loader from './Loader';
 export default class CreateTournament extends React.Component {
     constructor() {
         super();
-        this.state = { players: [], teams: [], loading: true };
+        this.state = { players: [], teams: [ { name: 'Italy', player: '' }, { name: 'England', player: '' }, { name: '', player: '' } ], loading: true };
     }
     componentDidMount() {
         this.getPlayers();
@@ -56,16 +56,21 @@ export default class CreateTournament extends React.Component {
                                 </select>
                             </div>
                             <label>Lag</label>
-                            <div className="item team horizontal">
-                                <input type="text" id="name" className="half-width" placeholder="Lagets namn" />
+                            {this.state.teams.map(team => {
+                            return (
+                                <div className="item team horizontal">
+                                <input type="text" id="name" className="half-width" placeholder="Lagets namn" value={team.name} />
                                 <select id="player" className="half-width">
                                         <option value="0">- Spelare -</option>
-                                        {this.state.players.map(player => {
-                                        return (
+                                    {this.state.players.map(player => {
+                                    return (
                                                 <option key={player._id} value="{player._id}">{player.name}</option>);
-                                        })}
+                                    })}
                                 </select>
-                            </div>
+                                </div>
+                            );
+                            })}
+                            
                             <div className="item team">
                                 <button className="btn plus">+</button>
                             </div>
