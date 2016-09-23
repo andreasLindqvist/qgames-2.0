@@ -100,6 +100,12 @@ router.route('/:tournament_id/details')
             });
         };
         var getGameDone = function (game) {
+            var homeTeam = tournamentDetails.teams.find(team => { return team._id == game.homeTeam.id });
+            var awayTeam = tournamentDetails.teams.find(team => { return team._id == game.awayTeam.id });
+            game.homeTeam.name = homeTeam.name;
+            game.homeTeam.logo = homeTeam.logo;
+            game.awayTeam.name = awayTeam.name;
+            game.awayTeam.logo = awayTeam.logo;
             tournamentDetails.games.push(game);
             checkAllGamesDone();
         };
@@ -111,22 +117,6 @@ router.route('/:tournament_id/details')
         }
     });
 
-router.route('/:tournament_id/games/played')
-    .get(function(req, res) {
-        Game.find({ 'tournament.id': req.params.tournament_id, played: { $ne: null } }).sort({ played: -1 }).exec(function (err, games) {
-            if(err)
-                res.send(err);
-            res.json(games);
-        });
-    });
 
-router.route('/:tournament_id/games/notplayed')
-    .get(function (req, res) {
-        Game.find({ 'tournament.id': req.params.tournament_id, played: null }).sort({ played: -1 }).exec(function (err, games) {
-            if (err)
-                res.send(err);
-            res.json(games);
-        });
-    });
 
 module.exports = router;

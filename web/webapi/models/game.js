@@ -7,11 +7,15 @@ var GameSchema = new Schema({
     },
     homeTeam: {
         id: String,
-        goals: Number
+        goals: Number,
+        name: String,
+        logo: String
     },
     awayTeam: {
         id: String,
-        goals: Number
+        goals: Number,
+        name: String,
+        logo: String
     },
     played: Date
 });

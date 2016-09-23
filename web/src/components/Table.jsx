@@ -67,6 +67,7 @@ export default class Table extends React.Component {
         const totalNumGames = ((this.props.teams.length * (this.props.teams.length - 1)) / 2) * numRoundRobins;
         var tableCompleted = (this.props.games.length == totalNumGames);
         return (
+            <section>
                         <ul className="table">
                 <li className="team table-header">
                     <span className="column position">#</span>
@@ -100,6 +101,12 @@ export default class Table extends React.Component {
                 })}
 </ul>
 <h4>{tableCompleted ? 'Färdigspelat!' : 'Inte färdigt'}</h4>
+            <ul className="medals">
+                <li className=""><span className="icon-medal gold"></span>{(table[0]) ? table[0].name : '' }</li>
+                <li className=""><span className="icon-medal silver"></span>{(table[1]) ? table[1].name : '' }</li>
+                <li className=""><span className="icon-medal bronze"></span>{(table[2]) ? table[2].name : '' }</li>
+            </ul>
+            </section>
             );
-    }
-}
+                }
+                }
