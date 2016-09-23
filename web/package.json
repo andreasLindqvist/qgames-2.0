@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "webpack": "webpack -w",
-    "server": "node -v"
+    "server": "node server"
   },
   "dependencies": {
     "react": "15.2.0",
