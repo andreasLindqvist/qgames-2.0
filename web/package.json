@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "webpack": "webpack -w",
-    "server": "node server"
+    "server": "node -v"
   },
   "dependencies": {
     "react": "15.2.0",
@@ -15,7 +15,8 @@
     "react-addons-css-transition-group": "^15.3.1",
     "express": "^4.13.4",
 	  "mongoose": "~4.5.0",
-    "body-parser": "~1.0.1"
+    "body-parser": "~1.0.1",
+    "node-linq": "0.0.5"
   },
   "devDependencies": {
     "webpack": "1.13.1",
