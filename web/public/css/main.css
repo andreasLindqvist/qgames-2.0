@@ -483,14 +483,14 @@ label {
     border: solid 1px #eee;
 }
 
-.medal {
+.medals .icon-medal {
     font-weight: bold;
     display: inline-block;
     width: 20px;
     height: 20px;
     margin-right: 10px;
 }
-.medal.gold {
+.medals .icon-medal.gold {
     background-color:gold;
 }
 .medal.silver {
